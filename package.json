@@ -2,7 +2,8 @@
   "name": "sidemath",
   "displayName": "sidemath",
   "description": "mathlive on your side",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "repository": "https://github.com/dannypsnl/sidemath",
   "engines": {
     "vscode": "^1.103.0"
   },
