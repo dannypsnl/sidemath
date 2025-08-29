@@ -32,6 +32,18 @@ function activate(context) {
 
       panel.webview.html = getWebviewContent();
 
+      panel.webview.onDidReceiveMessage(
+        (message) => {
+          switch (message.command) {
+            case "formula":
+              vscode.env.clipboard.writeText(message.text);
+              return;
+          }
+        },
+        undefined,
+        context.subscriptions
+      );
+
       panel.onDidDispose(
         () => {
           panel = undefined;
@@ -55,11 +67,15 @@ function getWebviewContent() {
   <title>Edit Formula</title>
 </head>
 <body>
-	<math-field style="font-size: 2em; width: 100%">x^2+y^2=1</math-field>
+	<math-field id="formula" style="font-size: 2em; width: 100%">x^2+y^2=1</math-field>
 	<script>
+		const vscode = acquireVsCodeApi();
+		const mf = document.getElementById("formula");
     mf.addEventListener('input', evt =>
-			// This line won't work, but I don't know the reason yet
-			navigator.clipboard.writeText(evt.target.value);
+			vscode.postMessage({
+				command: 'formula',
+				text: evt.target.value
+    	})
     );
   </script>
 </body>
