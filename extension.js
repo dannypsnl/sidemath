@@ -4,7 +4,7 @@ function activate(context) {
   const disposable = vscode.commands.registerCommand(
     "sidemath.open",
     function () {
-      const panel = vscode.window.createWebviewPanel(
+      let panel = vscode.window.createWebviewPanel(
         "sidemath",
         "Sidemath",
         vscode.ViewColumn.Beside,
