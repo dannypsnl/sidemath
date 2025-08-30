@@ -4,10 +4,9 @@ function activate(context) {
   const disposable = vscode.commands.registerCommand(
     "sidemath.open",
     function () {
-      vscode.window.showInformationMessage("edit your formula in sidemath");
       const panel = vscode.window.createWebviewPanel(
         "sidemath",
-        "Math on your side",
+        "Sidemath",
         vscode.ViewColumn.Beside,
         {
           enableScripts: true,
