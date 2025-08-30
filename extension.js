@@ -51,7 +51,11 @@ function getWebviewContent() {
   <title>Edit Formula</title>
 </head>
 <body>
-	<math-field id="formula" style="font-size: 2em; width: 100%">x^2+y^2=1</math-field>
+	<math-field
+    id="formula"
+    style="font-size: 2em; width: 100%"
+    placeholder="\\text{Enter a formula}"
+  />
 	<script>
 		const vscode = acquireVsCodeApi();
 		const mf = document.getElementById("formula");
