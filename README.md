@@ -14,6 +14,10 @@ No
 
 ## Release Notes
 
+### 1.2.0
+
+- virtual keyboard worked now
+
 ### 1.1.0
 
 - stop sync formula, add copy buttons
