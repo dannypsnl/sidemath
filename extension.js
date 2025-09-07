@@ -47,22 +47,24 @@ function getWebviewContent() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
+  <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline';">
+  <script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
   <title>Edit Formula</title>
 </head>
 <body>
+  <h1>Type your formula here:</h1>
   <div>
-	  <math-field
+    <math-field
       id="formula"
       style="font-size: 2em; width: 100%"
       placeholder="\\text{Enter a formula}"
     />
-	</div>
+  </div>
   <button onclick="copyLatex()">Copy as LaTeX</button>
   <button onclick="copyTypst()">Copy as Typst</button>
   <script>
-		const vscode = acquireVsCodeApi();
-		const mf = document.getElementById("formula");
+    const vscode = acquireVsCodeApi();
+    const mf = document.getElementById("formula");
 
     function copyLatex(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('latex')}) };
     function copyTypst(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('typst')}) };
