@@ -65,6 +65,9 @@ function getWebviewContent() {
   <script>
     const vscode = acquireVsCodeApi();
     const mf = document.getElementById("formula");
+    mf.mathVirtualKeyboardPolicy = "sandboxed";
+    mf.addEventListener("focusin", evt => window.mathVirtualKeyboard.show());
+    mf.addEventListener("focusout", evt => window.mathVirtualKeyboard.hide());
 
     function copyLatex(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('latex')}) };
     function copyTypst(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('typst')}) };
