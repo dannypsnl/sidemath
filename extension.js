@@ -19,7 +19,7 @@ function activate(context) {
       panel.webview.onDidReceiveMessage(
         (message) => {
           switch (message.command) {
-            case "formula":
+            case "clipboard":
               vscode.env.clipboard.writeText(message.text);
               return;
           }
@@ -51,20 +51,21 @@ function getWebviewContent() {
   <title>Edit Formula</title>
 </head>
 <body>
-	<math-field
-    id="formula"
-    style="font-size: 2em; width: 100%"
-    placeholder="\\text{Enter a formula}"
-  />
-	<script>
+  <div>
+	  <math-field
+      id="formula"
+      style="font-size: 2em; width: 100%"
+      placeholder="\\text{Enter a formula}"
+    />
+	</div>
+  <button onclick="copyLatex()">Copy as LaTeX</button>
+  <button onclick="copyTypst()">Copy as Typst</button>
+  <script>
 		const vscode = acquireVsCodeApi();
 		const mf = document.getElementById("formula");
-    mf.addEventListener('input', evt =>
-			vscode.postMessage({
-				command: 'formula',
-				text: evt.target.value
-    	})
-    );
+
+    function copyLatex(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('latex')}) };
+    function copyTypst(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('typst')}) };
   </script>
 </body>
 </html>`;
