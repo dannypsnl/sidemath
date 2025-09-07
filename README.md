@@ -14,6 +14,10 @@ No
 
 ## Release Notes
 
+### 1.1.0
+
+- stop sync formula, add copy buttons
+
 ### 1.0.0
 
 - side panel mathlive editor
