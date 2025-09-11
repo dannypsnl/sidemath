@@ -14,6 +14,10 @@ No
 
 ## Release Notes
 
+### 1.3.1
+
+- fix send formula problem, it should send selection, or fall back to send whole line
+
 ### 1.3.0
 
 - send selected formula to panel (and open panel if not opened)

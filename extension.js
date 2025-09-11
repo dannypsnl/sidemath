@@ -69,15 +69,16 @@ function activate(context) {
     "sidemath.open_selection",
     function () {
       const editor = vscode.window.activeTextEditor;
-      if (
-        editor &&
-        editor.selections.length === 1 &&
-        editor.selection.isEmpty
-      ) {
-        const formula = editor.document.lineAt(
-          editor.selection.active.line
-        ).text;
-
+      if (editor && editor.selections.length === 1) {
+        let formula = "";
+        if (editor.selection.isEmpty) {
+          formula = editor.document.lineAt(editor.selection.active.line).text;
+        } else {
+          formula = editor.document.getText(
+            new vscode.Range(editor.selection.start, editor.selection.end)
+          );
+        }
+        console.log({ formula });
         MathPanel.createOrShow(context);
         MathPanel.currentPanel.editFormula(editor.document.languageId, formula);
       }
