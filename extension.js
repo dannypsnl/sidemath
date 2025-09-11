@@ -52,7 +52,7 @@ class MathPanel {
     MathPanel.currentPanel = new MathPanel(context, panel);
   }
 
-  editFormula(formula) {
+  editFormula(languageId, formula) {
     this._panel.webview.postMessage({
       command: "edit",
       text: formula,
@@ -79,7 +79,7 @@ function activate(context) {
         ).text;
 
         MathPanel.createOrShow(context);
-        MathPanel.currentPanel.editFormula(formula);
+        MathPanel.currentPanel.editFormula(editor.document.languageId, formula);
       }
     }
   );

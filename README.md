@@ -14,6 +14,10 @@ No
 
 ## Release Notes
 
+### 1.3.0
+
+- send selected formula to panel (and open panel if not opened)
+
 ### 1.2.0
 
 - virtual keyboard worked now
