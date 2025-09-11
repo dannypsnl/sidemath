@@ -1,6 +1,8 @@
 const vscode = require("vscode");
 
 class MathPanel {
+  currentPanel = undefined;
+
   constructor(context, panel) {
     this._panel = panel;
     // Set the webview's initial html content
@@ -9,6 +11,7 @@ class MathPanel {
     this._panel.onDidDispose(
       () => {
         this._panel = undefined;
+        MathPanel.currentPanel = undefined;
       },
       null,
       context.subscriptions
@@ -49,6 +52,13 @@ class MathPanel {
     MathPanel.currentPanel = new MathPanel(context, panel);
   }
 
+  editFormula(formula) {
+    this._panel.webview.postMessage({
+      command: "edit",
+      text: formula,
+    });
+  }
+
   _update() {
     this._panel.webview.html = getWebviewContent();
   }
@@ -59,16 +69,17 @@ function activate(context) {
     "sidemath.open_selection",
     function () {
       const editor = vscode.window.activeTextEditor;
-      if (editor.selections.length === 1 && editor.selection.isEmpty) {
+      if (
+        editor &&
+        editor.selections.length === 1 &&
+        editor.selection.isEmpty
+      ) {
         const formula = editor.document.lineAt(
           editor.selection.active.line
         ).text;
 
         MathPanel.createOrShow(context);
-        MathPanel.currentPanel.webview.postMessage({
-          command: "edit",
-          text: formula,
-        });
+        MathPanel.currentPanel.editFormula(formula);
       }
     }
   );
@@ -112,9 +123,12 @@ function getWebviewContent() {
     mf.addEventListener("focusin", evt => window.mathVirtualKeyboard.show());
     mf.addEventListener("focusout", evt => window.mathVirtualKeyboard.hide());
 
-    window.addEventListener("message", msg => {
-      if (msg.command === "edit") {
-        mf.setValue(msg.text)
+    window.addEventListener("message", evt => {
+      const msg = evt.data;
+      switch (msg.command) {
+        case 'edit':
+          mf.setValue(msg.text);
+          break;
       }
     });
 
