@@ -17,7 +17,18 @@
     "commands": [
       {
         "command": "sidemath.open",
-        "title": "Open sidemath"
+        "title": "Sidemath: Open panel"
+      },
+      {
+        "command": "sidemath.open_selection",
+        "title": "Sidemath: Open selected formula in panel"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "sidemath.open_selection",
+        "key": "Alt+Enter",
+        "when": "editorTextFocus"
       }
     ]
   },

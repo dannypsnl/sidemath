@@ -1,44 +1,87 @@
 const vscode = require("vscode");
 
-function activate(context) {
-  const disposable = vscode.commands.registerCommand(
-    "sidemath.open",
-    function () {
-      let panel = vscode.window.createWebviewPanel(
-        "sidemath",
-        "Sidemath",
-        vscode.ViewColumn.Beside,
-        {
-          enableScripts: true,
-          retainContextWhenHidden: true,
+class MathPanel {
+  constructor(context, panel) {
+    this._panel = panel;
+    // Set the webview's initial html content
+    this._update();
+
+    this._panel.onDidDispose(
+      () => {
+        this._panel = undefined;
+      },
+      null,
+      context.subscriptions
+    );
+
+    this._panel.webview.onDidReceiveMessage(
+      (message) => {
+        switch (message.command) {
+          case "clipboard":
+            vscode.env.clipboard.writeText(message.text);
+            return;
         }
-      );
+      },
+      undefined,
+      context.subscriptions
+    );
+  }
 
-      panel.webview.html = getWebviewContent();
+  static createOrShow(context) {
+    const column = vscode.ViewColumn.Beside;
 
-      panel.webview.onDidReceiveMessage(
-        (message) => {
-          switch (message.command) {
-            case "clipboard":
-              vscode.env.clipboard.writeText(message.text);
-              return;
-          }
-        },
-        undefined,
-        context.subscriptions
-      );
+    if (MathPanel.currentPanel) {
+      MathPanel.currentPanel._panel.reveal(column);
+      return;
+    }
 
-      panel.onDidDispose(
-        () => {
-          panel = undefined;
-        },
-        null,
-        context.subscriptions
-      );
+    // Otherwise, create a new panel.
+    const panel = vscode.window.createWebviewPanel(
+      "sidemath",
+      "Sidemath",
+      column,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
+
+    MathPanel.currentPanel = new MathPanel(context, panel);
+  }
+
+  _update() {
+    this._panel.webview.html = getWebviewContent();
+  }
+}
+
+function activate(context) {
+  const commandOpenSelectionInPanel = vscode.commands.registerCommand(
+    "sidemath.open_selection",
+    function () {
+      const editor = vscode.window.activeTextEditor;
+      if (editor.selections.length === 1 && editor.selection.isEmpty) {
+        const formula = editor.document.lineAt(
+          editor.selection.active.line
+        ).text;
+
+        MathPanel.createOrShow(context);
+        MathPanel.currentPanel.webview.postMessage({
+          command: "edit",
+          text: formula,
+        });
+      }
     }
   );
 
-  context.subscriptions.push(disposable);
+  const commandOpenPanel = vscode.commands.registerCommand(
+    "sidemath.open",
+    function () {
+      MathPanel.createOrShow(context);
+    }
+  );
+
+  context.subscriptions.push(commandOpenPanel);
+  context.subscriptions.push(commandOpenSelectionInPanel);
 }
 
 function getWebviewContent() {
@@ -68,6 +111,12 @@ function getWebviewContent() {
     mf.mathVirtualKeyboardPolicy = "sandboxed";
     mf.addEventListener("focusin", evt => window.mathVirtualKeyboard.show());
     mf.addEventListener("focusout", evt => window.mathVirtualKeyboard.hide());
+
+    window.addEventListener("message", msg => {
+      if (msg.command === "edit") {
+        mf.setValue(msg.text)
+      }
+    });
 
     function copyLatex(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('latex')}) };
     function copyTypst(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('typst')}) };
