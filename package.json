@@ -2,7 +2,7 @@
   "name": "sidemath",
   "displayName": "sidemath",
   "description": "mathlive on your side",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "repository": "https://github.com/dannypsnl/sidemath",
   "publisher": "dannypsnl",
   "engines": {
@@ -47,6 +47,6 @@
   },
   "dependencies": {
     "mathlive": "^0.107.0",
-    "tex2typst": "^0.3.21"
+    "tex2typst": "^0.3.22"
   }
 }
