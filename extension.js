@@ -90,7 +90,7 @@ function activate(context) {
             new vscode.Range(editor.selection.start, editor.selection.end)
           );
         }
-        console.log({ formula });
+        console.log({ action: "Edit", formula });
         MathPanel.createOrShow(context);
         MathPanel.currentPanel.editFormula(editor.document.languageId, formula);
       }
@@ -131,6 +131,7 @@ function getWebviewContent() {
   <button onclick="copyTypst()">Copy as Typst</button>
   <script>
     const vscode = acquireVsCodeApi();
+
     const mf = document.getElementById("formula");
     mf.mathVirtualKeyboardPolicy = "sandboxed";
     mf.addEventListener("focusin", evt => window.mathVirtualKeyboard.show());
