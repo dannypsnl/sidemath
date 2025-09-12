@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const { typst2tex } = require("tex2typst");
 
 class MathPanel {
   currentPanel = undefined;
@@ -53,10 +54,21 @@ class MathPanel {
   }
 
   editFormula(languageId, formula) {
-    this._panel.webview.postMessage({
-      command: "edit",
-      text: formula,
-    });
+    switch (languageId) {
+      case "typst":
+        this._panel.webview.postMessage({
+          command: "edit",
+          text: typst2tex(formula),
+        });
+        break;
+
+      default:
+        this._panel.webview.postMessage({
+          command: "edit",
+          text: formula,
+        });
+        break;
+    }
   }
 
   _update() {

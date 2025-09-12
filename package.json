@@ -46,6 +46,7 @@
     "eslint": "^9.32.0"
   },
   "dependencies": {
-    "mathlive": "^0.107.0"
+    "mathlive": "^0.107.0",
+    "tex2typst": "^0.3.21"
   }
 }
