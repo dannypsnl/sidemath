@@ -4,17 +4,27 @@ Math formula WYSIWYG (rely on [mathlive](https://mathlive.io/mathfield/)) sideba
 
 ## Features
 
-You can open a side panel (use Ctrl+Shift+p and type "sidemath.open") to edit math formula in it. There are copy buttons depends on your need, and the virtual keyboard will show when math edit area get focus.
+You can open a side panel (use Ctrl+Shift+p and type "sidemath.open") to edit math formula in it. There are copy buttons depends on your need.
 
-<img width="934" height="513" alt="image" src="https://github.com/user-attachments/assets/da268c22-00d4-42ea-baf5-15d4a5f8b1ad" />
+<img width="1034" height="216" alt="image" src="https://github.com/user-attachments/assets/f754294b-a0cd-4367-9a06-93041e4a248b" />
 
-If you have existed formula, you can select it and use Alt+M to edit selection in panel. The only problem is this only expect LaTeX formula, not typst or other forms, this might change in the future.
+The virtual keyboard will show when edit area get focus
+
+<img width="1025" height="955" alt="image" src="https://github.com/user-attachments/assets/1d655bba-9746-4961-87fd-b66b8ca8cd51" />
+
+If you have existed formula, you can select it and use <kbd>Alt</kbd> + <kbd>M</kbd> to edit selection in panel, by default this is expecting a LaTeX formula. When you're editing a typst document, it will accept typst formula instead.
+
+<img width="1787" height="334" alt="image" src="https://github.com/user-attachments/assets/3653fec0-aef4-45d9-8a5e-0bafe24022de" />
 
 ## Known Issues
 
 No
 
 ## Release Notes
+
+### 1.4.0
+
+- accept typst formula when editing a typst document
 
 ### 1.3.1
 
