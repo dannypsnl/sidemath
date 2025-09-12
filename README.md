@@ -4,7 +4,7 @@ Math formula WYSIWYG (rely on [mathlive](https://mathlive.io/mathfield/)) sideba
 
 ## Features
 
-You can open a side panel (use Ctrl+Shift+p and type "sidemath.open") to edit math formula in it. There are copy buttons depends on your need.
+You can open a side panel (use <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and type "sidemath.open") to edit math formula in it. There are copy buttons depends on your need.
 
 <img width="1034" height="216" alt="image" src="https://github.com/user-attachments/assets/f754294b-a0cd-4367-9a06-93041e4a248b" />
 
