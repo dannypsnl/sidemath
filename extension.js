@@ -1,5 +1,5 @@
 const vscode = require("vscode");
-const { typst2tex } = require("tex2typst");
+const { tex2typst, typst2tex } = require("tex2typst");
 
 class MathPanel {
   currentPanel = undefined;
@@ -23,6 +23,9 @@ class MathPanel {
         switch (message.command) {
           case "clipboard":
             vscode.env.clipboard.writeText(message.text);
+            return;
+          case "clipboard-typst":
+            vscode.env.clipboard.writeText(tex2typst(message.text));
             return;
         }
       },
@@ -147,7 +150,7 @@ function getWebviewContent() {
     });
 
     function copyLatex(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('latex')}) };
-    function copyTypst(){ vscode.postMessage({command: 'clipboard', text: mf.getValue('typst')}) };
+    function copyTypst(){ vscode.postMessage({command: 'clipboard-typst', text: mf.getValue('latex')}) };
   </script>
 </body>
 </html>`;

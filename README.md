@@ -22,6 +22,10 @@ No
 
 ## Release Notes
 
+### 1.4.2
+
+- fix copied typst formula
+
 ### 1.4.0
 
 - accept typst formula when editing a typst document
