@@ -25,7 +25,10 @@ class MathPanel {
             vscode.env.clipboard.writeText(message.text);
             return;
           case "clipboard-typst":
-            vscode.env.clipboard.writeText(tex2typst(message.text));
+            let formula = message.text;
+            formula = formula.replace("\\lang", "\\langle");
+            formula = formula.replace("\\rang", "\\rangle");
+            vscode.env.clipboard.writeText(tex2typst(formula));
             return;
         }
       },

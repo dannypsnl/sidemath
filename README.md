@@ -22,6 +22,10 @@ No
 
 ## Release Notes
 
+### 1.4.3
+
+- normalize latex command to fix typst output
+
 ### 1.4.2
 
 - fix copied typst formula
